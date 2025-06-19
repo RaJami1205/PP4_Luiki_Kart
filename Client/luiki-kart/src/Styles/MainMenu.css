@@ -1,0 +1,99 @@
+/* Estilo base */
+.menu-container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
+
+/* Cabecera con temática de coches */
+.menu-header {
+  text-align: center;
+  position: relative;
+}
+
+.menu-titulo {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, #f5af19, #f12711);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(241, 39, 17, 0.3);
+}
+
+.menu-decoracion-coche {
+  width: 150px;
+  height: 60px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40"><path d="M10,20 L30,10 L70,10 L90,20 L80,30 L20,30 Z" fill="none" stroke="%23f12711" stroke-width="2"/><circle cx="25" cy="30" r="8" fill="%23333" stroke="%23fff"/><circle cx="75" cy="30" r="8" fill="%23333" stroke="%23fff"/></svg>') no-repeat center;
+  margin: 0 auto;
+}
+
+/* Botones estilizados */
+.menu-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.menu-boton {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-crear {
+  background: linear-gradient(45deg, #f12711, #f5af19);
+  color: white;
+}
+
+.btn-unirse {
+  background: linear-gradient(45deg, #11998e, #38ef7d);
+  color: white;
+}
+
+.btn-ranking {
+  background: linear-gradient(45deg, #0575e6, #021b79);
+  color: white;
+}
+
+.menu-boton:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.menu-boton:active {
+  transform: translateY(0);
+}
+
+/* Footer con detalles de neumáticos */
+.menu-footer {
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.neumatico-decorativo {
+  width: 100px;
+  height: 100px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23111" stroke="%23f12711" stroke-width="2"/><circle cx="50" cy="50" r="30" fill="none" stroke="%23f5af19" stroke-width="1" stroke-dasharray="5,5"/></svg>') no-repeat center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.2;
+  bottom: 40px;
+}

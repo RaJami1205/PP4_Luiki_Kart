@@ -1,0 +1,244 @@
+.join-match-container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  min-height: 100vh;
+  color: white;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.join-match-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.join-match-header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.car-illustration {
+  width: 200px;
+  height: 100px;
+  margin: 0 auto;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M20,50 L50,20 L150,20 L180,50 L160,80 L40,80 Z" fill="none" stroke="%234facfe" stroke-width="3"/><circle cx="60" cy="80" r="15" fill="%23333" stroke="%23fff"/><circle cx="140" cy="80" r="15" fill="%23333" stroke="%23fff"/></svg>') no-repeat center;
+}
+
+.selection-section {
+  margin-bottom: 2.5rem;
+}
+
+.selection-section h2 {
+  margin-bottom: 1rem;
+  color: #4facfe;
+  text-align: center;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.option-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #4facfe;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+}
+
+.option-card.selected {
+  background: rgba(79, 172, 254, 0.2);
+  border-color: #00f2fe;
+}
+
+.option-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.option-name {
+  font-size: 1.3rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.back-button, .join-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button {
+  background: #ff4d4d;
+  color: white;
+}
+
+.join-button {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+.join-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.back-button:hover {
+  background: #ff3333;
+  transform: translateY(-3px);
+}
+
+.join-button:not(.disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+}
+
+.player-count-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.count-button {
+  background: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.count-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.count-button:hover:not(:disabled) {
+  background: #00f2fe;
+  transform: scale(1.1);
+}
+
+.player-count-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(79, 172, 254, 0.2);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid #4facfe;
+}
+
+.player-icon {
+  font-size: 1.5rem;
+}
+
+.player-count-input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  width: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.player-count-input::-webkit-outer-spin-button,
+.player-count-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Estilos para el modal de la pista */
+.track-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.track-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  border: 2px solid #4facfe;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ff4d4d;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-description {
+  margin-top: 1rem;
+  color: #a0a0a0;
+  font-style: italic;
+  max-width: 600px;
+}
+
+.select-track-button {
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: black;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.select-track-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+}
