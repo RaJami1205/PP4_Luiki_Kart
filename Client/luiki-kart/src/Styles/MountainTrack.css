@@ -1,0 +1,159 @@
+.mountain-track-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.mountain-track-container.full-preview {
+  max-width: 800px;
+  height: 465px;
+}
+
+.mountain-background {
+  background: linear-gradient(to bottom, #87CEEB, #4682B4, #1E90FF);
+  padding: 20px;
+  position: relative;
+}
+
+.mountain-peaks {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
+  z-index: 1;
+}
+
+.track-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+.track-row {
+  display: flex;
+  gap: 1px;
+  height: 12px;
+}
+
+.track-cell {
+  width: 12px;
+  height: 12px;
+  position: relative;
+}
+
+/* Estilos para los diferentes tipos de celdas */
+.cell-0 { /* Roca */
+  background-color: #708090;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.cell-1 { /* Camino */
+  background-color: #A9A9A9;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.cell-2, .cell-3 { /* Puntos de inicio/fin */
+  background-color: #2E8B57;
+}
+
+.cell-4 { /* Nieve */
+  background-color: #FFFFFF;
+}
+
+.cell-5 { /* Árbol */
+  background-color: #2E8B57;
+}
+
+.rock {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #708090;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.path {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #A9A9A9;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.snow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: #FFFFFF;
+}
+
+.tree {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+}
+
+.start-point, .finish-point {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: #2E8B57;
+  color: white;
+}
+
+.mountain-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background-color: white;
+  border-radius: 20px;
+  top: 15%;
+  left: 10%;
+  box-shadow: 
+    10px 5px 0 0 white,
+    -10px 5px 0 0 white;
+}
+
+.eagle {
+  position: absolute;
+  font-size: 16px;
+  top: 20%;
+  right: 15%;
+  animation: soar 10s linear infinite;
+}
+
+@keyframes soar {
+  0% { transform: translateX(50px) translateY(10px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(-100px) translateY(-20px); opacity: 0; }
+}

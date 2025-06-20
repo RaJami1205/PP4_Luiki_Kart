@@ -1,0 +1,160 @@
+.beach-track-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.beach-track-container.full-preview {
+  max-width: 800px;
+  height: 465px;
+}
+
+.beach-background {
+  background: linear-gradient(to bottom, #87CEEB, #1E90FF, #00BFFF);
+  padding: 20px;
+  position: relative;
+}
+
+.ocean-horizon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3));
+  z-index: 1;
+}
+
+.track-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+.track-row {
+  display: flex;
+  gap: 1px;
+  height: 12px;
+}
+
+.track-cell {
+  width: 12px;
+  height: 12px;
+  position: relative;
+}
+
+/* Estilos para los diferentes tipos de celdas */
+.cell-0 { /* Arena */
+  background-color: #F5DEB3;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.cell-1 { /* Pasarela de tablas */
+  background-color: #DEB887;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.cell-2, .cell-3 { /* Puntos de inicio/fin */
+  background-color: #FFA500;
+}
+
+.cell-4 { /* Agua */
+  background-color: rgba(30, 144, 255, 0.7);
+}
+
+.cell-5 { /* Palmera */
+  background-color: #F5DEB3;
+}
+
+.sand {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #F5DEB3;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.boardwalk {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #DEB887;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.water {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+}
+
+.palm-tree {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+}
+
+.start-point, .finish-point {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: #FFA500;
+  color: white;
+}
+
+.beach-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sun {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  top: 10%;
+  right: 10%;
+  box-shadow: 0 0 20px #FFD700;
+}
+
+.seagull {
+  position: absolute;
+  font-size: 16px;
+  top: 15%;
+  left: 20%;
+  animation: fly 8s linear infinite;
+}
+
+@keyframes fly {
+  0% { transform: translateX(-50px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(100px); opacity: 0; }
+}

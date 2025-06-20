@@ -1,6 +1,8 @@
 import React from 'react';
 import '../Styles/CreateMatch.css';
 import VulcanoTrack from './VulcanoTrack';
+import BeachTrack from './BeachTrack';
+import MountainTrack from './MountainTrack';
 import { useNavigate } from 'react-router-dom';
 
 const CreateMatch = () => {
@@ -15,9 +17,9 @@ const CreateMatch = () => {
   // Opciones
   const gameTypes = [{ id: 1, name: "VS", icon: "⚔️" }];
   const tracks = [
-    { id: 1, name: "Vulcano", icon: "🌋", color: "#4facfe", preview: <VulcanoTrack /> },
-    { id: 2, name: "Playa", icon: "🏖️", color: "#f5af19" },
-    { id: 3, name: "Montañosa", icon: "⛰️", color: "#38ef7d" }
+  { id: 1, name: "Vulcano", icon: "🌋", color: "#4facfe", preview: <VulcanoTrack /> },
+  { id: 2, name: "Playa", icon: "🏖️", color: "#f5af19", preview: <BeachTrack /> },
+  { id: 3, name: "Montañosa", icon: "⛰️", color: "#38ef7d", preview: <MountainTrack /> }
   ];
 
   // Selección automática del tipo de juego
@@ -45,11 +47,9 @@ const CreateMatch = () => {
 
   // Función para manejar la selección de pista
   const handleTrackSelect = (track) => {
-    setSelectedTrack(track);
-    if (track.name === "Vulcano") {
-      setShowTrackModal(true); // Mostrar modal solo para pista urbana
-    }
-  };
+  setSelectedTrack(track);
+  setShowTrackModal(true); // Mostrar modal para CUALQUIER pista seleccionada
+};
 
   return (
     <div className="join-match-container">
@@ -146,8 +146,8 @@ const CreateMatch = () => {
             >
               ✕
             </button>
-            <h2>Pista Vulcano</h2>
-            <VulcanoTrack showFullPreview={true} />
+            <h2>Pista {selectedTrack?.name}</h2>
+            {selectedTrack?.preview && React.cloneElement(selectedTrack.preview, { showFullPreview: true })}
             <button 
               className="select-track-button"
               onClick={() => setShowTrackModal(false)}
