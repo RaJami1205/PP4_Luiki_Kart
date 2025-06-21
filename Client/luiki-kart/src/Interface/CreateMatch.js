@@ -5,6 +5,8 @@ import BeachTrack from './BeachTrack';
 import MountainTrack from './MountainTrack';
 import { useNavigate } from 'react-router-dom';
 
+import socket from '../socket';
+
 const CreateMatch = () => {
   const navigate = useNavigate();
   const MAX_PLAYERS = 8;
@@ -30,6 +32,7 @@ const CreateMatch = () => {
   const handleBack = () => navigate('/');
   
   const handleJoin = () => {
+    
     if (!selectedTrack) return;
     
     console.log("Configuración de partida:", {
@@ -37,7 +40,23 @@ const CreateMatch = () => {
       track: selectedTrack,
       players: playerCount
     });
+
+
     // Lógica para crear/unión a partida
+    const partidaData = {
+      pista: selectedTrack.name,
+      vueltas: 3,
+      maxJugadores: playerCount,
+      creador: localStorage.getItem('nickname') || 'Anon',
+    };
+
+    socket.emit('crearPartida', partidaData, (response) => {
+    console.log('Partida creada:', response);
+
+    // ir a la sala de espera
+    //navigate(`/sala-espera/`);
+  });
+
   };
 
   const handlePlayerCountChange = (e) => {
