@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MenuInicial from './Interface/MainMenu';
 import CreateMatch from './Interface/CreateMatch';
 import MatchList from './Interface/MatchList';
+import WaitingRoom from './Interface/WaitingRoom';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/unirse-partida" element={<CreateMatch />} />
           <Route path="/partidas" element={<MatchList />} />
+          <Route path="/waiting-room" element={<WaitingRoom />} />
         </Routes>
       </div>
     </Router>
@@ -24,7 +26,7 @@ function Home() {
   };
 
   const handleUnirsePartida = () => {
-    window.location.href = "/partidas";
+    window.location.href = "/waiting-room";
   };
 
   const handleVerRanking = () => {
