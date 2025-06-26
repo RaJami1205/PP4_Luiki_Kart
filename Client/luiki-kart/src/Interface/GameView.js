@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import socket from '../socket';
 import matrix from '../Assets/matrix_track.json';
+import '../Styles/GameView.css';
 
 const GameView = () => {
   const { partidaId } = useParams();

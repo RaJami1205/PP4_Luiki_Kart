@@ -1,0 +1,155 @@
+/* MatchList.css */
+.matchlist-container {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  min-height: 100vh;
+  padding: 2rem;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.matchlist-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 100%;
+}
+
+.matchlist-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #00d2ff, #3a7bd5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px rgba(58, 123, 213, 0.3);
+}
+
+.matchlist-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+.track-icon {
+  width: 80px;
+  height: 40px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M10,25 Q25,5 40,25 T70,25 T100,25" fill="none" stroke="%233a7bd5" stroke-width="2" stroke-linecap="round"/><circle cx="25" cy="40" r="5" fill="%23333"/><circle cx="75" cy="40" r="5" fill="%23333"/></svg>') no-repeat center;
+  margin: 0 auto;
+}
+
+.matchlist-list {
+  width: 100%;
+  max-width: 800px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.matchlist-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #3a7bd5;
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.matchlist-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.match-info {
+  flex: 1;
+}
+
+.match-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #00d2ff;
+}
+
+.match-details {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.match-players {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.join-button {
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  text-align: center;
+}
+
+.join-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+}
+
+.join-button:disabled {
+  background: linear-gradient(45deg, #666, #999);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.empty-message {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Efectos decorativos */
+.decorative-line {
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(0, 210, 255, 0.5), transparent);
+  margin: 2rem 0;
+  width: 100%;
+}
+
+/* Efecto de neón para los títulos */
+.neon-text {
+  text-shadow: 0 0 5px #00d2ff, 0 0 10px #00d2ff, 0 0 15px #00d2ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .matchlist-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .join-button {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+  .matchlist-title {
+    font-size: 2rem;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import socket from '../socket';
+import '../Styles/MatchList.css'; 
 
 const MatchList = () => {
   const [partidas, setPartidas] = useState([]);
@@ -42,6 +43,8 @@ const MatchList = () => {
     });
   };
 
+  const handleBack = () => navigate('/');
+
   return (
     <div>
       <h1>Partidas Disponibles</h1>
@@ -53,6 +56,9 @@ const MatchList = () => {
             <li key={p.id}>
               <strong>{p.pista}</strong> - Jugadores: {p.jugadores.length}/{p.maxJugadores}
               <button onClick={() => handleUnirse(p.id)}>Unirse</button>
+              <button className="back-button" onClick={handleBack}>
+                🔙 Volver
+              </button>
             </li>
           ))}
         </ul>
