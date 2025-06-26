@@ -4,6 +4,7 @@ import MenuInicial from './Interface/MainMenu';
 import CreateMatch from './Interface/CreateMatch';
 import MatchList from './Interface/MatchList';
 import WaitingRoom from './Interface/WaitingRoom';
+import GameView from './Interface/GameView';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/unirse-partida" element={<CreateMatch />} />
           <Route path="/partidas" element={<MatchList />} />
           <Route path="/sala-espera/:partidaId" element={<WaitingRoom />} />
+          <Route path="/juego/:partidaId" element={<GameView />} />
         </Routes>
       </div>
     </Router>

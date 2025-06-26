@@ -3,6 +3,17 @@ const { partidasTimeout } = require('./config');
 
 let partidas = [];
 
+const posicionesFijas = [
+  { x: 25, y: 40 },
+  { x: 26, y: 42 },
+  { x: 27, y: 40 },
+  { x: 28, y: 42 },
+  { x: 29, y: 40 },
+  { x: 30, y: 42 },
+  { x: 31, y: 40 },
+  { x: 32, y: 42 },
+];
+
 function crearPartida({pista, vueltas, maxJugadores, creador}) {
   const id = uuidv4();
   const nuevaPartida = {
@@ -13,7 +24,7 @@ function crearPartida({pista, vueltas, maxJugadores, creador}) {
     jugadores: [
       {
         nickname: creador,
-        posicion: { x: 0, y: 0 },
+        posicion: { x: 25, y: 40 },
         tiempo: 0
       }
     ],
@@ -34,13 +45,14 @@ function unirseAPartida(partidaId, nickname) {
   if (partida.jugadores.length >= partida.maxJugadores) {
     return null; // Partida llena
   }
+  const nuevaPosicion = posicionesFijas[partida.jugadores.length];
 
   partida.jugadores.push({
     nickname,
-    posicion: { x: 0, y: 0 },
+    posicion: nuevaPosicion,
     tiempo: 0
   });
-  
+
   if (partida.jugadores.length === partida.maxJugadores) {
     partida.estado = 'en curso';
   }

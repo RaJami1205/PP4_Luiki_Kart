@@ -4,6 +4,9 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 
+const matrix = require('./Assets/matrix_track.json').matrix;
+
+const POSICION_INICIAL = { x: 44, y: 23 };
 
 const {
   crearPartida,
@@ -60,6 +63,15 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('iniciarPartida', ({ partidaId }) => {
+    const partida = partidas[partidaId];
+    if (!partida) return;
+
+    partida.estado = 'en curso';
+
+    io.to(partidaId).emit('partidaIniciada');
+  });
+
   socket.on('salirPartida', ({ partidaId, nickname }) => {
     const partida = partidas[partidaId];
     if (partida) {
@@ -77,6 +89,60 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`Disconnected user: ${socket.id}`);
+  });
+
+  socket.on('mover', ({ partidaId, nickname, direccion }, callback) => {
+    const partida = partidas[partidaId];
+    if (!partida) return;
+
+    const jugador = partida.jugadores.find(j => j.nickname === nickname);
+    if (!jugador) return;
+
+    let nuevaX = jugador.posicion.x;
+    let nuevaY = jugador.posicion.y;
+
+    switch (direccion) {
+      case 'up': nuevaY--; break;
+      case 'down': nuevaY++; break;
+      case 'left': nuevaX--; break;
+      case 'right': nuevaX++; break;
+      default: return;
+    }
+
+    // Esta parte es para verificar que no se salga del mapa
+    if (nuevaX < 0 || nuevaX >= matrix[0].length || nuevaY < 0 || nuevaY >= matrix.length) return;
+
+    // Verificar si es calle donde el jugador puede pasar
+    const esPista = matrix[nuevaY]?.[nuevaX] === 0 || matrix[nuevaY]?.[nuevaX] === 2;
+    if (!esPista) return;
+
+    // Verifica que no haya otro jugador en esa posicion
+    const ocupado = partida.jugadores.some(j =>
+      j.nickname !== nickname &&
+      j.posicion?.x === nuevaX &&
+      j.posicion?.y === nuevaY
+    );
+    if (ocupado) return;
+
+    jugador.posicion.x = nuevaX;
+    jugador.posicion.y = nuevaY;
+
+    // Verifica si hizo una vuelta
+    if ((nuevaX >= POSICION_INICIAL.x && nuevaX <= POSICION_INICIAL.x + 5) && nuevaY === POSICION_INICIAL.y) {
+      jugador.vueltas = (jugador.vueltas || 0) + 1;
+    }
+
+    io.to(partidaId).emit('estadoActualizado', {
+      jugadores: partida.jugadores.map(j => ({
+        nickname: j.nickname,
+        posicion: { x: j.posicion.x, y: j.posicion.y },
+        tiempo: j.tiempo,
+        vueltas: j.vueltas || 0
+      }))
+    });
+
+    // Callback opcional al jugador que se movió
+    if (callback) callback({ exito: true });
   });
 });
 
