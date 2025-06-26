@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { partidasTimeout } = require('./config');
+const { partidaTimeout } = require('./config');
 
 let partidas = [];
 
@@ -25,9 +25,11 @@ function crearPartida({pista, vueltas, maxJugadores, creador}) {
       {
         nickname: creador,
         posicion: { x: 25, y: 40 },
-        tiempo: 0
+        tiempo: 0,
+        vueltas: -1
       }
     ],
+    inicio: null,
     creadoEn: Date.now(),
     estado: 'pendiente',
   };
@@ -50,11 +52,12 @@ function unirseAPartida(partidaId, nickname) {
   partida.jugadores.push({
     nickname,
     posicion: nuevaPosicion,
-    tiempo: 0
+    tiempo: 0,
+    vueltas: -1
   });
 
   if (partida.jugadores.length === partida.maxJugadores) {
-    partida.estado = 'en curso';
+    partida.estado = 'completo';
   }
   
   return partida;
@@ -64,11 +67,13 @@ function obtenerPartidasPendientes() {
   return Object.values(partidas).filter(partida => partida.estado === 'pendiente');
 }
 
-function limpiarPartidasExpiradas() {
+function limpiarPartidasExpiradas(io) {
   const ahora = Date.now();
   for (const id in partidas) {
     const p = partidas[id];
-    if (p.estado === 'pendiente' && ahora - p.creadaEn > partidasTimeout) {
+    if (p.estado !== 'en curso' && ahora - p.creadoEn > partidaTimeout) {
+      io.emit('partidaCerrada', { id });
+      io.to(id).emit('salaCerrada');
       delete partidas[id];
     }
   }

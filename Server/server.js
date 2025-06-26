@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const matrix = require('./Assets/matrix_track.json').matrix;
 
-const POSICION_INICIAL = { x: 44, y: 23 };
+const POSICION_INICIAL = { x: 22, y: 39 };
 
 const {
   crearPartida,
@@ -68,16 +68,18 @@ io.on('connection', (socket) => {
     if (!partida) return;
 
     partida.estado = 'en curso';
+    partida.inicio = Date.now();
 
     io.to(partidaId).emit('partidaIniciada');
   });
+
 
   socket.on('salirPartida', ({ partidaId, nickname }) => {
     const partida = partidas[partidaId];
     if (partida) {
       partida.jugadores = partida.jugadores.filter(j => j.nickname !== nickname);
 
-      if (partida.estado === 'en curso' && partida.jugadores.length < partida.maxJugadores) {
+      if (partida.estado === 'completo' && partida.jugadores.length < partida.maxJugadores) {
         partida.estado = 'pendiente';
         io.emit('nuevaPartida', partida);
       }
@@ -119,6 +121,7 @@ io.on('connection', (socket) => {
     // Verifica que no haya otro jugador en esa posicion
     const ocupado = partida.jugadores.some(j =>
       j.nickname !== nickname &&
+      (j.vueltas ?? 0) < 3 &&
       j.posicion?.x === nuevaX &&
       j.posicion?.y === nuevaY
     );
@@ -127,9 +130,24 @@ io.on('connection', (socket) => {
     jugador.posicion.x = nuevaX;
     jugador.posicion.y = nuevaY;
 
+
     // Verifica si hizo una vuelta
-    if ((nuevaX >= POSICION_INICIAL.x && nuevaX <= POSICION_INICIAL.x + 5) && nuevaY === POSICION_INICIAL.y) {
+    if (nuevaX === POSICION_INICIAL.x  && (nuevaY >= POSICION_INICIAL.y && nuevaY)) {
       jugador.vueltas = (jugador.vueltas || 0) + 1;
+      if (jugador.vueltas === 3 && !jugador.tiempo) {
+        jugador.tiempo = Date.now() - partida.inicio;
+        partida.ranking = partida.ranking || [];
+        partida.ranking.push({
+          nickname: jugador.nickname,
+          tiempo: jugador.tiempo
+        });
+
+        // Si todos terminaron, avisar al frontend
+        const todosCompletaron = partida.jugadores.every(j => j.vueltas >= 3);
+        if (todosCompletaron) {
+          io.to(partidaId).emit('partidaTerminada', partida.ranking);
+        }
+      }
     }
 
     io.to(partidaId).emit('estadoActualizado', {
@@ -148,7 +166,7 @@ io.on('connection', (socket) => {
 
 // Limpieza periódica de partidas vencidas
 setInterval(() => {
-  limpiarPartidasExpiradas();
+  limpiarPartidasExpiradas(io);
 }, intervaloLimpieza);
 
 const PORT = process.env.PORT || 3001;
