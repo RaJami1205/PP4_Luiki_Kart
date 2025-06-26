@@ -24,9 +24,14 @@ const WaitingRoom = () => {
       setAdmin(partida.jugadores[0]?.nickname);
     });
 
+    socket.on('partidaIniciada', () => {
+      navigate(`/juego/${partidaId}`);
+    });
+
     return () => {
       socket.off('jugadorUnido');
       socket.off('estadoActualizado');
+      socket.off('partidaIniciada');
     };
   }, [partidaId]);
 
