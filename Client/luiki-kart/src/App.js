@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import MenuInicial from './Interface/MainMenu';
 import CreateMatch from './Interface/CreateMatch';
 import MatchList from './Interface/MatchList';
@@ -13,20 +13,23 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/unirse-partida" element={<CreateMatch />} />
           <Route path="/partidas" element={<MatchList />} />
-          <Route path="/waiting-room" element={<WaitingRoom />} />
+          <Route path="/sala-espera/:partidaId" element={<WaitingRoom />} />
         </Routes>
       </div>
     </Router>
   );
 }
 
+
 function Home() {
+  const navigate = useNavigate();
+
   const handleCrearPartida = () => {
-    window.location.href = "/unirse-partida";
+    navigate('/unirse-partida');
   };
 
   const handleUnirsePartida = () => {
-    window.location.href = "/waiting-room";
+    navigate('/partidas');
   };
 
   const handleVerRanking = () => {
