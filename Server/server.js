@@ -53,6 +53,28 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('solicitarEstadoPartida', ({ partidaId }) => {
+    const partida = partidas[partidaId];
+    if (partida) {
+      io.to(partidaId).emit('estadoActualizado', partida);
+    }
+  });
+
+  socket.on('salirPartida', ({ partidaId, nickname }) => {
+    const partida = partidas[partidaId];
+    if (partida) {
+      partida.jugadores = partida.jugadores.filter(j => j.nickname !== nickname);
+
+      if (partida.estado === 'en curso' && partida.jugadores.length < partida.maxJugadores) {
+        partida.estado = 'pendiente';
+        io.emit('nuevaPartida', partida);
+      }
+
+      io.to(partidaId).emit('estadoActualizado', partida);
+    }
+  });
+
+
   socket.on('disconnect', () => {
     console.log(`Disconnected user: ${socket.id}`);
   });

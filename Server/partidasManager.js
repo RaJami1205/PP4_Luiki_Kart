@@ -10,7 +10,13 @@ function crearPartida({pista, vueltas, maxJugadores, creador}) {
     pista,
     vueltas,
     maxJugadores,
-    jugadores: [{ nickame: creador }],
+    jugadores: [
+      {
+        nickname: creador,
+        posicion: { x: 0, y: 0 },
+        tiempo: 0
+      }
+    ],
     creadoEn: Date.now(),
     estado: 'pendiente',
   };
@@ -29,10 +35,14 @@ function unirseAPartida(partidaId, nickname) {
     return null; // Partida llena
   }
 
-  partida.jugadores.push({ nickname });
+  partida.jugadores.push({
+    nickname,
+    posicion: { x: 0, y: 0 },
+    tiempo: 0
+  });
   
   if (partida.jugadores.length === partida.maxJugadores) {
-    partida.estado = 'en curso'; // Cambiar estado si se llena
+    partida.estado = 'en curso';
   }
   
   return partida;
@@ -46,7 +56,7 @@ function limpiarPartidasExpiradas() {
   const ahora = Date.now();
   for (const id in partidas) {
     const p = partidas[id];
-    if (p.estado === 'pendiente' && ahora - p.creadaEn > partidaTimeout) {
+    if (p.estado === 'pendiente' && ahora - p.creadaEn > partidasTimeout) {
       delete partidas[id];
     }
   }

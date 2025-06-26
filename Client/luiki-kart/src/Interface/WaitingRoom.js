@@ -1,54 +1,86 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import socket from '../socket';
 import '../Styles/WaitingRoom.css';
-import { useNavigate } from 'react-router-dom';
 
 const WaitingRoom = () => {
+  const { partidaId } = useParams();
+  const nickname = sessionStorage.getItem('nickname') || 'Jugador';
   const navigate = useNavigate();
 
-  const handleBack = () => navigate('/');
+  const [jugadores, setJugadores] = useState([]);
+  const [admin, setAdmin] = useState('');
+
+  useEffect(() => {
+    socket.on('jugadorUnido', (partida) => {
+      setJugadores(partida.jugadores);
+      setAdmin(partida.jugadores[0]?.nickname);
+    });
+
+    socket.emit('solicitarEstadoPartida', { partidaId });
+
+    socket.on('estadoActualizado', (partida) => {
+      setJugadores(partida.jugadores);
+      setAdmin(partida.jugadores[0]?.nickname);
+    });
+
+    return () => {
+      socket.off('jugadorUnido');
+      socket.off('estadoActualizado');
+    };
+  }, [partidaId]);
+
+  
+  const handleSalir = () => {
+    socket.emit('salirPartida', { partidaId, nickname });
+    navigate('/');
+  };
+
+  const handleIniciar = () => {
+    socket.emit('iniciarPartida', { partidaId });
+    navigate(`/juego/${partidaId}`);
+  };
+
+  const maxJugadores = 8;
+
 
   return (
     <div className="waiting-room-container">
       <div className="loading-animation">
-        <div className="car-loader">
-          <div className="car-body">
-            <div className="car-top"></div>
-            <div className="car-wheel car-front-wheel"></div>
-            <div className="car-wheel car-back-wheel"></div>
-          </div>
-        </div>
-        <div className="loading-text">
-          <span>B</span>
-          <span>U</span>
-          <span>S</span>
-          <span>C</span>
-          <span>A</span>
-          <span>N</span>
-          <span>D</span>
-          <span>O</span>
-          <span> </span>
-          <span>J</span>
-          <span>U</span>
-          <span>G</span>
-          <span>A</span>
-          <span>D</span>
-          <span>O</span>
-          <span>R</span>
-          <span>E</span>
-          <span>S</span>
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </div>
+        <h2 className="loading-text">Jugadores en sala:</h2>
+        <ul style={{ textAlign: 'left', color: 'white' }}>
+          {[...Array(maxJugadores)].map((_, index) => {
+            const jugador = jugadores[index];
+            if (jugador) {
+              return (
+                <li key={index}>
+                  {index + 1}. {jugador.nickname} {jugador.nickname === nickname ? '(tú)' : ''}
+                </li>
+              );
+            } else {
+              return <li key={index}>{index + 1}. esperando jugador...</li>;
+            }
+          })}
+        </ul>
+
         <div className="progress-bar">
           <div className="progress"></div>
         </div>
-        <button className="cancel-button" onClick={handleBack}>
-          Cancelar búsqueda
-        </button>
+
+        <div style={{ marginTop: '1rem' }}>
+          {nickname === admin && (
+            <button className="cancel-button" onClick={handleIniciar}>
+              🚦 Iniciar Partida
+            </button>
+          )}
+          <button className="cancel-button" onClick={handleSalir}>
+            ❌ Salir
+          </button>
+        </div>
       </div>
     </div>
   );
 };
+
 
 export default WaitingRoom;
