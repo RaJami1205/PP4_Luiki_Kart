@@ -32,42 +32,33 @@ const CreateMatch = () => {
   const handleBack = () => navigate('/');
   
   const handleJoin = () => {
-    
-    if (!selectedTrack) return;
-    
-    console.log("Configuración de partida:", {
-      gameType: selectedGameType,
-      track: selectedTrack,
-      players: playerCount
-    });
+    if (!selectedTrack || !selectedGameType) return;
 
+    const nickname = sessionStorage.getItem('nickname') || 'Anon';
 
-    // Lógica para crear/unión a partida
     const partidaData = {
       pista: selectedTrack.name,
       vueltas: 3,
       maxJugadores: playerCount,
-      creador: localStorage.getItem('nickname') || 'Anon',
+      creador: nickname,
     };
 
     socket.emit('crearPartida', partidaData, (response) => {
-    console.log('Partida creada:', response);
-
-    // ir a la sala de espera
-    //navigate(`/sala-espera/`);
-  });
-
+      console.log('Partida creada:', response);
+      navigate(`/sala-espera/${response.id}`);
+    });
   };
 
   const handlePlayerCountChange = (e) => {
     const value = Math.max(2, Math.min(MAX_PLAYERS, parseInt(e.target.value) || 2));
     setPlayerCount(value);
+    console.log(sessionStorage.getItem('nickname'))
   };
 
   // Función para manejar la selección de pista
   const handleTrackSelect = (track) => {
   setSelectedTrack(track);
-  setShowTrackModal(true); // Mostrar modal para CUALQUIER pista seleccionada
+  setShowTrackModal(true);
 };
 
   return (
