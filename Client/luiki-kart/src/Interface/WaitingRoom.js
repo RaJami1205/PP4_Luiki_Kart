@@ -10,6 +10,8 @@ const WaitingRoom = () => {
 
   const [jugadores, setJugadores] = useState([]);
   const [admin, setAdmin] = useState('');
+  const [maxJugadores, setMaxJugadores] = useState(8);
+
 
   useEffect(() => {
     socket.on('jugadorUnido', (partida) => {
@@ -22,13 +24,21 @@ const WaitingRoom = () => {
     socket.on('estadoActualizado', (partida) => {
       setJugadores(partida.jugadores);
       setAdmin(partida.jugadores[0]?.nickname);
+      setMaxJugadores(partida.maxJugadores);
     });
 
     socket.on('partidaIniciada', () => {
       navigate(`/juego/${partidaId}`);
     });
 
+    socket.on('salaCerrada', () => {
+      alert('⛔ La sala fue cerrada por inactividad.');
+      navigate('/');
+    });
+
+
     return () => {
+      socket.off('salaCerrada');
       socket.off('jugadorUnido');
       socket.off('estadoActualizado');
       socket.off('partidaIniciada');
@@ -46,7 +56,6 @@ const WaitingRoom = () => {
     navigate(`/juego/${partidaId}`);
   };
 
-  const maxJugadores = 8;
 
 
   return (
@@ -73,7 +82,7 @@ const WaitingRoom = () => {
         </div>
 
         <div style={{ marginTop: '1rem' }}>
-          {nickname === admin && (
+          {nickname === admin && jugadores.length >= 2 && (
             <button className="cancel-button" onClick={handleIniciar}>
               🚦 Iniciar Partida
             </button>

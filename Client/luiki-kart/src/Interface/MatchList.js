@@ -23,6 +23,15 @@ const MatchList = () => {
     return () => socket.off('nuevaPartida', nueva);
   }, []);
 
+  useEffect(() => {
+    const eliminar = ({ id }) => {
+      setPartidas(prev => prev.filter(p => p.id !== id));
+    };
+    socket.on('partidaCerrada', eliminar);
+    return () => socket.off('partidaCerrada', eliminar);
+  }, []);
+
+
   const handleUnirse = (partidaId) => {
     socket.emit('unirse', { partidaId, nickname }, (response) => {
       if (response.exito) {
