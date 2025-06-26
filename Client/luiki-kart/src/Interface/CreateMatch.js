@@ -44,7 +44,6 @@ const CreateMatch = () => {
     };
 
     socket.emit('crearPartida', partidaData, (response) => {
-      console.log('Partida creada:', response);
       navigate(`/sala-espera/${response.id}`);
     });
   };
