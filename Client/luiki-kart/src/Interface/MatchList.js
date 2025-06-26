@@ -5,7 +5,7 @@ import socket from '../socket';
 const MatchList = () => {
   const [partidas, setPartidas] = useState([]);
   const navigate = useNavigate();
-  const nickname = localStorage.getItem('nickname') || 'Anon';
+  const nickname = sessionStorage.getItem('nickname') || 'Anon';
 
   useEffect(() => {
     fetch('http://localhost:3001/partidas')
